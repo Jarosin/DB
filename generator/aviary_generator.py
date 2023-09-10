@@ -24,7 +24,7 @@ class AviaryGenerator(BaseGenerator):
 
     def fill_db(self, db_connection, amount_of_records):
         cursor = db_connection.cursor()
-        insert_query = """INSERT INTO aviary (id, size, pavilion, is_outdoors, construction_date, cleaning_stuff_size)"""
+        insert_query = """INSERT INTO aviary (id, size, pavilion, is_outdoors, construction_date, cleaning_stuff_size) VALUES (%s, %s, %s, %s, %s, %s)"""
 
         for i in range(amount_of_records):
             size = random.randint(self.size_min, self.size_max)

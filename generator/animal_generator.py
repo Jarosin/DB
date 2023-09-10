@@ -23,7 +23,7 @@ class AnimalGenerator(BaseGenerator):
 
     def fill_db(self, db_connection, amount_of_records):
         cursor = db_connection.cursor()
-        insert_query = """INSERT INTO animals (id, aviary_id, name, weight, height, endangered, age)"""
+        insert_query = """INSERT INTO animals (id, aviary_id, name, weight, height, endangered, age) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
 
         for i in range(amount_of_records):
             weight = random.uniform(self.weight_min, self.weight_max)
