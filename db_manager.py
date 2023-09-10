@@ -25,6 +25,9 @@ class DBManager:
     def __del__(self):
         self.connection.close()
 
+    def get_connection(self):
+        return self.connection
+
     def execute_query(self, query):
         self.connection.autocommit = True
         cursor = self.connection.cursor()
