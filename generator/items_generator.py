@@ -1,4 +1,4 @@
-from base_generator import BaseGenerator
+from .base_generator import BaseGenerator
 import random
 from faker import Faker
 
@@ -13,8 +13,8 @@ class ItemsGenerator(BaseGenerator):
 
         self.item_types = ["toy", "furniture", "treat", "medicine"]
 
-        latest_date = "+10y"
-        earliest_date = "-3y"
+        latest_date = "-10y"
+        earliest_date = "today"
 
     def fill_db(self, db_connection, amount_of_records):
         cursor = db_connection.cursor()

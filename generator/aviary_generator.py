@@ -1,17 +1,9 @@
-from base_generator import BaseGenerator
+from .base_generator import BaseGenerator
 import random
 
 class AviaryGenerator(BaseGenerator):
     def __init__(self) -> None:
         super().__init__()
-        self.names = ["wolve", "lion", "antelope", "beaver", "capybara",
-                      "elephant", "squirrel", "horse", "goat", "cheetah", "zebra",
-                      "fox", "goose", "hawk", "crab", "sealion",
-                      "hedgehog", "mole", "duck", "baboon", "peacock",
-                      "flamingo", "lynx", "owl", "wombat", "sheep", "bison",
-                      "buffalo", "bull", "kangaroo", "bear", "camel", "rabbit",
-                      "donkey", "deer", "tiger", "pig", "giraffe", "turtle"]
-
         self.pavilion_types = ('asia', 'europe', 'north america', 'south america', 'australia')
 
         self.size_min = 600
@@ -31,7 +23,7 @@ class AviaryGenerator(BaseGenerator):
             stuff_size = size / 100 * 0.2
             record_to_insert = (random.randint(0, amount_of_records - 1),
                                 size,
-                                self.pavilion_types[random.randint(0, len(self.names) - 1)],
+                                self.pavilion_types[random.randint(0, len(self.pavilion_types) - 1)],
                                 bool(random.random()),
                                 self.dates[random.randint(0, len(self.dates) - 1)],
                                 stuff_size

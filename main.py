@@ -1,9 +1,6 @@
 from db_manager import *
 from json_parser import JsonParser
-from generator.animal_generator import AnimalGenerator
-from generator.animals_to_items_generator import ItemsToAnimalsGenerator
-from generator.aviary_generator import AviaryGenerator
-from generator.items_generator import ItemsGenerator
+from generator import *
 
 TABLE_ROOT = "tables/"
 AMOUNT_OF_RECORDS = 1000
@@ -20,10 +17,10 @@ for file_name in tables:
 
     database.execute_query(query)
 
-items_generator = ItemsGenerator()
-aviary_generator = AviaryGenerator()
-animals_generator = AnimalGenerator()
-animals_to_items_generator = ItemsToAnimalsGenerator()
+items_generator = items_generator.ItemsGenerator()
+aviary_generator = aviary_generator.AviaryGenerator()
+animals_generator = animal_generator.AnimalGenerator()
+animals_to_items_generator = animals_to_items_generator.ItemsToAnimalsGenerator()
 generators = [aviary_generator, animals_generator, items_generator, animals_to_items_generator]
 
 for generator in generators:

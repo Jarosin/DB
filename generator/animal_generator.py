@@ -1,4 +1,4 @@
-from base_generator import BaseGenerator
+from .base_generator import BaseGenerator
 import random
 
 class AnimalGenerator(BaseGenerator):
