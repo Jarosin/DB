@@ -1,6 +1,6 @@
-import mysql.connector
-from mysql.connector import Error
-import pandas as pd
-from DBManager import *
+from db_manager import *
+from json_parser import JsonParser
 
-DB = DBManager("zoo", "bmstu", "qwerty", "127.0.0.1", "5432")
+parser = JsonParser()
+data = parser.read_json("DB.json")["databases"][0]
+DB = DBManager(data["name"], data["user"], data["password"], data["host"], data["port"])
