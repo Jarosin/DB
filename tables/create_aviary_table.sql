@@ -1,4 +1,3 @@
-DROP TYPE IF EXISTS pavilion_name CASCADE;
 CREATE TYPE pavilion_name as ENUM ('asia', 'europe', 'north america', 'south america', 'australia');
 
 CREATE TABLE IF NOT EXISTS aviary (

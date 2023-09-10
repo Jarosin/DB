@@ -1,4 +1,3 @@
-DROP TYPE IF EXISTS item_type CASCADE;
 CREATE TYPE item_type as ENUM ('toy', 'furniture', 'treat', 'medicine');
 
 CREATE TABLE IF NOT EXISTS items (
