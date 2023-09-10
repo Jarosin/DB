@@ -1,9 +1,10 @@
-CREATE TYPE item_type as ENUM("toy", "furniture", "treat", "medicine");
+DROP TYPE IF EXISTS item_type CASCADE;
+CREATE TYPE item_type as ENUM('toy', 'furniture', 'treat', 'medicine');
 
 CREATE TABLE IF NOT EXISTS items (
     id INT PRIMARY KEY,
     cost DECIMAL,
     WEIGHT DECIMAL NOT NULL,
     type item_type NOT NULL,
-    expritation_date DATETIME
+    expritation_date DATE
 );
