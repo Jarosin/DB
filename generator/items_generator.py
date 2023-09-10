@@ -2,7 +2,7 @@ from base_generator import BaseGenerator
 import random
 from faker import Faker
 
-class AviaryGenerator(BaseGenerator):
+class ItemsGenerator(BaseGenerator):
     def __init__(self) -> None:
         super().__init__()
         self.cost_min = 0.2
