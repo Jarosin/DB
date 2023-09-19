@@ -2,19 +2,17 @@ from .base_generator import BaseGenerator
 import random
 
 class ItemsToAnimalsGenerator(BaseGenerator):
-    def __init__(self) -> None:
+    def __init__(self, amount_of_records) -> None:
         super().__init__()
+        self.params = ['id', 'animal_id', 'item_id','availability']
+        self.amount_of_records = amount_of_records
 
-    def fill_db(self, db_connection, amount_of_records):
-        cursor = db_connection.cursor()
-        insert_query = """INSERT INTO items_to_animals (id, animal_id, item_id, availability) VALUES (%s,%s,%s,%s)"""
+    def set_total_amount(self, amount_of_records):
+        self.amount_of_records = amount_of_records
 
-        for i in range(amount_of_records):
-            record_to_insert = (i,
-                                random.randint(0, amount_of_records - 1),
-                                random.randint(0, amount_of_records - 1),
-                                bool(random.randint(0, 1)))
-
-            cursor.execute(insert_query, record_to_insert)
-            db_connection.commit()
-        return
+    def generate_record(self):
+        record = (self.id,
+                random.randint(0, self.amount_of_records - 1),
+                random.randint(0, self.amount_of_records - 1),
+                bool(random.randint(0, 1)))
+        return record
