@@ -5,6 +5,8 @@ from generator import *
 from db_writer import *
 
 TABLE_ROOT = "tables/"
+create_table_file_name = "tables.sql"
+constraints_file_name = "constraints.sql"
 AMOUNT_OF_RECORDS = 1000
 
 parser = JsonParser()
@@ -27,16 +29,25 @@ generators = [aviary_generator, animals_generator,
 
 help = """g - to generate data in csv files
 c - to create tables
+a - alter table to add constraints
 w - to write data from csv into database
 q - to end the process\n"""
 
 while (1):
     command = input("Input a command:\n" + help)
     if command == 'c':
-        file = open(TABLE_ROOT + "tables.sql", "r")
+        file = open(TABLE_ROOT + create_table_file_name, "r")
         query = file.read()
         file.close()
         database_manager.execute_query(query)
+
+    if command == 'a':
+        file = open(TABLE_ROOT + constraints_file_name, "r")
+        query = file.read()
+        file.close()
+        database_manager.execute_query(query)
+
+
     elif command == 'g':
         writer = FileWriter()
         for i in range(len(generators)):
