@@ -5,7 +5,7 @@ ALTER COLUMN weight SET NOT NULL;
 ALTER TABLE items
 ALTER COLUMN type SET NOT NULL;
 ALTER TABLE items
-ADD CONSTRAINT price_check CHECK(price > 0);
+ADD CONSTRAINT price_check CHECK(cost > 0);
 ALTER TABLE items
 ADD CONSTRAINT weight_check CHECK(weight > 0);
 
