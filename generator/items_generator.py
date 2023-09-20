@@ -8,6 +8,8 @@ class ItemsGenerator(BaseGenerator):
     def __init__(self) -> None:
         super().__init__()
 
+        self.table_name = "items"
+
         self.params = ["id", "cost", "weight", 'type', 'expiraton_data']
 
         self.cost_min = 0.2

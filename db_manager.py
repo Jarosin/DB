@@ -1,11 +1,22 @@
 import psycopg2
 from psycopg2 import OperationalError
+from sqlalchemy import create_engine
 
 
 class DBManager:
     def __init__(self, db_name, db_user, db_password, db_host, db_port) -> None:
         self.connection = self.__create_connection(
             db_name, db_user, db_password, db_host, db_port)
+        self.db_name = db_name
+        self.db_user = db_user
+        self.db_password = db_password
+        self.db_host = db_host
+        self.db_port = db_port
+
+    def get_engine(self):
+        bd = f'postgresql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}'
+        engine = create_engine(bd)
+        return engine
 
     def __create_connection(self, db_name, db_user, db_password, db_host, db_port):
         connection = None

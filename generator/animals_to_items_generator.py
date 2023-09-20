@@ -4,6 +4,7 @@ import random
 class ItemsToAnimalsGenerator(BaseGenerator):
     def __init__(self, amount_of_records) -> None:
         super().__init__()
+        self.table_name = "items_to_animals"
         self.params = ['id', 'animal_id', 'item_id','availability']
         self.amount_of_records = amount_of_records
 

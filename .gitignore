@@ -1,3 +1,5 @@
 /build
-/__pycache__
 *.csv
+*.txt
+*/__pycache__
+/__pycache__

@@ -7,6 +7,8 @@ class AviaryGenerator(BaseGenerator):
     def __init__(self) -> None:
         super().__init__()
 
+        self.table_name = "aviary"
+
         self.params = ['id', 'size', 'type', 'outdoors', 'construction_date', 'stuff_size']
 
         self.pavilion_types = (

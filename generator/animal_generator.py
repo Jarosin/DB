@@ -6,6 +6,7 @@ class AnimalGenerator(BaseGenerator):
     def __init__(self, total_amount) -> None:
         super().__init__()
         self.total_amount = total_amount
+        self.table_name = "animals"
         self.params = ['id', 'aviary_id', "species",
                        'weigth', 'heigh', 'endangered', 'age']
 
@@ -28,6 +29,7 @@ class AnimalGenerator(BaseGenerator):
 
     def set_total(self, total_amount):
         self.total_amount = total_amount
+
 
     def generate_record(self):
         weight = random.uniform(self.weight_min, self.weight_max)
