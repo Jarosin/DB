@@ -21,6 +21,8 @@ ALTER COLUMN construction_date SET NOT NULL;
 ALTER TABLE aviary
 ALTER COLUMN cleaning_stuff_size SET NOT NULL;
 ALTER TABLE aviary
+ALTER COLUMN pavilion SET NOT NULL;
+ALTER TABLE aviary
 ADD CONSTRAINT size_check CHECK(size > 0 AND cleaning_stuff_size > 0);
 
 ALTER TABLE animals
