@@ -15,4 +15,6 @@ class ItemsToAnimalsGenerator(BaseGenerator):
                 random.randint(0, self.amount_of_records - 1),
                 random.randint(0, self.amount_of_records - 1),
                 bool(random.randint(0, 1)))
+
+        self.id += 1
         return record

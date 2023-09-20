@@ -27,9 +27,9 @@ class ItemsGenerator(BaseGenerator):
             start_date=self.earliest_date, end_date=self.latest_date)
         date = date.strftime("%d/%m/%Y")
         record = [self.id,
-                            random.uniform(self.cost_min, self.cost_max),
-                            random.uniform(self.weight_min,
-                                        self.weight_max),
+                            '%.2f'%(random.uniform(self.cost_min, self.cost_max)),
+                            '%.3f'%(random.uniform(self.weight_min,
+                                        self.weight_max)),
                             self.item_types[random.randint(
                                 0, len(self.item_types) - 1)],
                             date]

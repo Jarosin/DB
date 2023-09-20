@@ -29,15 +29,16 @@ class AnimalGenerator(BaseGenerator):
     def set_total(self, total_amount):
         self.total_amount = total_amount
 
-    def fill_db(self):
+    def generate_record(self):
         weight = random.uniform(self.weight_min, self.weight_max)
         height = weight / 0.45
         record = [self.id,
                   random.randint(0, self.total_amount - 1),
                   self.names[random.randint(0, len(self.names) - 1)],
-                  weight,
-                  height,
+                  '%.3f'%(weight),
+                  '%.3f'%(height),
                   bool(random.randint(0, 1)),
                   random.randint(self.age_min, self.age_max)]
+        self.id += 1
 
         return record
