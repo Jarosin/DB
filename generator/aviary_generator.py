@@ -9,7 +9,7 @@ class AviaryGenerator(BaseGenerator):
 
         self.table_name = "aviary"
 
-        self.params = ['id', 'size', 'type', 'outdoors', 'construction_date', 'stuff_size']
+        self.params = ['id', 'size', 'pavilion', 'outdoors', 'construction_date', 'cleaning_stuff_size']
 
         self.pavilion_types = (
             'asia', 'europe', 'north america', 'south america', 'australia')

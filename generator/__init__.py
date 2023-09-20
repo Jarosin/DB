@@ -1,2 +1,2 @@
-__all__ = ["animal_generator", "animals_to_items_generator",
+__all__ = ["animal_generator", "items_to_animals_generator",
            "aviary_generator", "base_generator", "items_generator"]

@@ -8,7 +8,7 @@ class AnimalGenerator(BaseGenerator):
         self.total_amount = total_amount
         self.table_name = "animals"
         self.params = ['id', 'aviary_id', "species",
-                       'weigth', 'heigh', 'endangered', 'age']
+                       'weight', 'height', 'endangered', 'age']
 
         self.names = ["wolve", "lion", "antelope", "beaver", "capybara",
                       "elephant", "squirrel", "horse", "goat", "cheetah", "zebra",

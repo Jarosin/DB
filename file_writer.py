@@ -1,4 +1,5 @@
 import csv
+import os
 
 class FileWriter():
     def write_csv(self, filename, data):
@@ -8,6 +9,9 @@ class FileWriter():
         return
 
     def generate_csv(self, filename, amount_of_records, generator):
+        if os.path.exists(filename):
+            os.remove(filename)
+
         self.write_csv(filename, generator.get_header())
 
         generator.reset_id()

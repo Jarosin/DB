@@ -10,7 +10,7 @@ class ItemsGenerator(BaseGenerator):
 
         self.table_name = "items"
 
-        self.params = ["id", "cost", "weight", 'type', 'expiraton_data']
+        self.params = ["id", "cost", "weight", 'type', 'expiraton_date']
 
         self.cost_min = 0.2
         self.cost_max = 1500
