@@ -2,7 +2,6 @@ from db_manager import *
 from file_writer import *
 from json_parser import JsonParser
 from generator import *
-from db_writer import *
 
 TABLE_ROOT = "tables/"
 create_table_file_name = "tables.sql"
