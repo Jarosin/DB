@@ -47,8 +47,8 @@ ADD CONSTRAINT age_check CHECK(age > 0);
 ALTER TABLE items_to_animals
 ADD CONSTRAINT pk_items_to_animals PRIMARY KEY(id);
 ALTER TABLE items_to_animals
-ADD CONSTRAINT fk_animal FOREIGN KEY (animal_id) REFERENCES animals(id);
+ADD CONSTRAINT fk_animal FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE;
 ALTER TABLE items_to_animals
-ADD CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES items(id);
+ADD CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE;
 ALTER TABLE items_to_animals
 ALTER COLUMN availability SET NOT NULL;

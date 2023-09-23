@@ -47,3 +47,8 @@ class DBManager:
             print("Query executed successfully")
         except OperationalError as e:
             print(f"The error '{e}' occurred")
+
+
+
+## TODO: Сделать копирование в copy_contents.sql через команлу copy sql
+## TODO: поставить графический интерфейс для работы с postgresql
