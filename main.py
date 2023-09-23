@@ -7,6 +7,7 @@ from db_writer import *
 TABLE_ROOT = "tables/"
 create_table_file_name = "tables.sql"
 constraints_file_name = "constraints.sql"
+copy_file_name = "copy.sql"
 AMOUNT_OF_RECORDS = 1000
 
 parser = JsonParser()
@@ -53,10 +54,11 @@ while (1):
         for i in range(len(generators)):
             writer.generate_csv(
                 CSV_FOLDER + csv_names[i], AMOUNT_OF_RECORDS, generators[i])
+
     elif command == 'w':
-        db_writer = DBWriter()
-        for i in range(len(csv_names)):
-            db_writer.write_db(
-                CSV_FOLDER + csv_names[i], generators[i].table_name, database_manager)
+        file = open(TABLE_ROOT + copy_file_name, "r")
+        query = file.read()
+        file.close()
+        database_manager.execute_query(query)
     elif command == 'q':
         break
