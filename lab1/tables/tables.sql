@@ -3,14 +3,14 @@ CREATE TYPE item_type as ENUM ('toy', 'furniture', 'treat', 'medicine');
 
 
 CREATE TABLE IF NOT EXISTS items (
-    id INT ,
+    id SERIAL ,
     cost DECIMAL,
     weight DECIMAL ,
     type item_type ,
     expiraton_date DATE
 );
 CREATE TABLE IF NOT EXISTS aviary (
-    id INT ,
+    id SERIAL ,
     size decimal ,
     pavilion pavilion_name,
     outdoors boolean ,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS aviary (
     cleaning_stuff_size INT
 );
 CREATE TABLE IF NOT EXISTS animals (
-    id INT ,
+    id SERIAL ,
     aviary_id INT,
     species VARCHAR (20),
     weight decimal ,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS animals (
 );
 
 CREATE TABLE IF NOT EXISTS items_to_animals (
-    id INT ,
+    id SERIAL ,
     animal_id INT,
     item_id INT,
     availability boolean
