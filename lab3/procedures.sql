@@ -7,6 +7,27 @@ as $$
 	end;
 $$ LANGUAGE plpgsql;
 
+
+
+
+Create or replace procedure print_n_animals_age(n integer)
+as
+$$
+	declare
+        age integer;
+	begin
+        SELECT animals.age into age from animals where animals.id = n;
+
+        RAISE notice 'Id = (%), age = (%)', n, age;
+		if n > 0 then
+			call print_n_animals_age(n - 1);
+            return;
+		end if;
+	end;
+$$ LANGUAGE plpgsql;
+
+
+
 Create or replace procedure sum_items_cost(out sum_cost numeric)
 as $$
     DECLARE
@@ -27,6 +48,12 @@ as $$
         sum_cost := total;
 	end;
 $$ LANGUAGE plpgsql;
+
+
+
+
+
+
 
 
 create or replace procedure print_sum_cost()

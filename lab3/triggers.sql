@@ -16,6 +16,14 @@ create trigger "update_animals_after_insert_trigger"
     execute procedure "update_animals"();
 
 
+
+
+
+
+
+
+
+
 create or replace function update_aviary()
 returns trigger
 AS
