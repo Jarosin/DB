@@ -1,6 +1,6 @@
-from lab1.db_manager import *
-from lab1.file_writer import *
-from lab1.json_parser import JsonParser
+from db_manager import *
+from file_writer import *
+from json_parser import JsonParser
 from generator import *
 
 TABLE_ROOT = "tables/"

@@ -93,28 +93,24 @@ EXECUTE PROCEDURE pyfn_you_shall_not_pass();
 DELETE FROM items_copy;
 
 -- 6. Определяемый пользователем тип данных CLR.
-CREATE TYPE user_subcount AS
+CREATE TYPE item_type_count AS
 (
-    username VARCHAR(32),
-    subscriber_count INT
+    type item_type,
+    count integer
 );
-DROP FUNCTION IF EXISTS pyfn_get_user_followers_count2;
-CREATE OR REPLACE FUNCTION pyfn_get_user_followers_count2(x_username VARCHAR(32))
-RETURNS user_subcount
+DROP FUNCTION IF EXISTS pyfn_get_item_type_count;
+CREATE OR REPLACE FUNCTION pyfn_get_item_type_count(required_type item_type)
+RETURNS item_type_count
 AS $$
     query = plpy.prepare("""
-        SELECT username, COUNT(follower_id) AS subscriber_count
-        FROM user_main AS t
-        JOIN (
-            SELECT * FROM user_subscription
-        ) AS tt
-        ON id = tt.following_id
-        WHERE username = $1
-        GROUP BY username
-        """, ["VARCHAR(32)"])
-    result = plpy.execute(query, [x_username])
+        SELECT type, COUNT(*) AS cnt
+        FROM items
+        WHERE type = $1
+        GROUP BY type
+        """, ["item_type"])
+    result = plpy.execute(query, [required_type])
     if result:
-        return (result[0]["username"], result[0]["subscriber_count"])
+        return (result[0]["type"], result[0]["cnt"])
 $$ LANGUAGE plpython3u;
 --
-SELECT * FROM pyfn_get_user_followers_count2('bianca796182'::VARCHAR(32));
+SELECT * FROM pyfn_get_item_type_count('medicine'::item_type);

@@ -1,5 +1,5 @@
-CREATE TYPE pavilion_name as ENUM ('asia', 'europe', 'north america', 'south america', 'australia');
-CREATE TYPE item_type as ENUM ('toy', 'furniture', 'treat', 'medicine');
+-- CREATE TYPE pavilion_name as ENUM ('asia', 'europe', 'north america', 'south america', 'australia');
+-- CREATE TYPE item_type as ENUM ('toy', 'furniture', 'treat', 'medicine');
 
 
 CREATE TABLE IF NOT EXISTS items (
