@@ -7,9 +7,9 @@ as $$
 	end;
 $$ LANGUAGE plpgsql;
 
+-------------------------------------------------------------------
 
-
-
+-- из dbeaver не видно, делай из psql(вход: sudo -u postgres psql)
 Create or replace procedure print_n_animals_age(n integer)
 as
 $$
@@ -26,35 +26,30 @@ $$
 	end;
 $$ LANGUAGE plpgsql;
 
-
+-------------------------------------------------------------------
 
 Create or replace procedure sum_items_cost(out sum_cost numeric)
 as $$
     DECLARE
         c CURSOR FOR SELECT cost FROM items;
-        SQLSTATE CHAR(5) DEFAULT '00000';
         total items.cost%TYPE;
         cur_cost items.cost%TYPE;
 	BEGIN
         total := 0;
         open c;
+        loop
+
         fetch from c into cur_cost;
-        WHILE SQLSTATE = '00000' LOOP
-            total := total + cur_cost;
-            fetch from c into cur_cost;
-        END LOOP;
+
+        exit when not found;
+
+        total := total + cur_cost;
+        end loop;
 
         close c;
         sum_cost := total;
 	end;
 $$ LANGUAGE plpgsql;
-
-
-
-
-
-
-
 
 create or replace procedure print_sum_cost()
 as $$
@@ -62,11 +57,11 @@ as $$
         total numeric;
 	BEGIN
         call sum_items_cost(total);
-        raise notice '%', total;
+        raise 'Calculated total equal: %', total;
 	end;
 $$ LANGUAGE plpgsql;
 
-
+-------------------------------------------------------------------
 create or replace procedure print_all()
     language plpgsql as
 $$
@@ -75,7 +70,9 @@ declare
 begin
 	for r in (select table_name from information_schema.tables where table_schema='public')
 	    loop
-	        RAISE NOTICE '%', r;
+	        RAISE 'Таблица из базы данных называется %', r;
 	    end loop;
 end
 $$;
+
+call print_all();

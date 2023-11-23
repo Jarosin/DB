@@ -10,19 +10,16 @@ $$
 $$
 language plpgsql;
 
-create trigger "update_animals_after_insert_trigger"
-    AFTER insert on animals
-    for each row
-    execute procedure "update_animals"();
+create or replace trigger "update_animals_after_insert_trigger"
+AFTER insert on animals
+for each row
+execute procedure "update_animals"();
 
 
+insert into animals (aviary_id, species, weight, height, endangered, age)
+values (10, 'wolf', 3, 4, true, 25);
 
-
-
-
-
-
-
+--------------------------------------------------------------
 
 create or replace function update_aviary()
 returns trigger
@@ -44,3 +41,7 @@ create trigger "update_aviary_instead_of_trigger"
     INSTEAD of update on aviary_view
     for each row
     execute procedure "update_aviary"();
+
+update aviary_view
+set outdoors = false
+where id = 1;
