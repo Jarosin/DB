@@ -5,3 +5,4 @@
 /__pycache__
 *.drawio
 lab1/generator/__pycache__
+*.json
