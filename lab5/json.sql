@@ -91,3 +91,59 @@ select * from items_json;
 -- добавить атрибут с типом XML или JSON к уже существующей таблице.
 -- Заполнить атрибут правдоподобными данными с помощью команд INSERT
 -- или UPDATE.
+
+DROP TABLE IF EXISTS animal_json_atr;
+CREATE TABLE IF NOT EXISTS animal_json_atr
+(
+    id int PRIMARY KEY,
+    name text NOT NULL,
+    personal_data JSONB
+);
+
+INSERT INTO animal_json_atr VALUES
+(1, 'Pumba', '{"tail_length" : 9, "hobby" : {"early_life": "eating glue", "late_life": "being a king"}}'),
+(2, 'Mufasa', '{"tail_length" : 13, "hobby" : {"early_life": "playing with others", "late_life": "playing with deers"}}');
+
+select * from animal_json_atr;
+
+UPDATE animal_json_atr
+SET personal_data = '{"tail_length" : 10, "hobby" : {"early_life": "playing with family", "late_life": "defeating scratch"}}';
+
+select * from animal_json_atr;
+
+-- 4. Выполнить следующие действия:
+-- 1. Извлечь XML/JSON фрагмент из XML/JSON документа
+SELECT
+       name,
+       personal_data->>'tail_length' AS tail_length,
+       personal_data->'hobby' AS hobby
+FROM animal_json_atr;
+-- 2. Извлечь значения конкретных узлов или атрибутов XML/JSON
+-- документа
+SELECT
+       name,
+       personal_data->>'tail_length' AS tail_length,
+       personal_data->'hobby'->>'early_life' AS hobby
+FROM animal_json_atr;
+-- 3. Выполнить проверку существования узла или атрибута
+INSERT INTO animal_json_atr VALUES
+(3, 'Scrach', '{"tail_length" : 4, "hobby" : "NULL"}'),
+(4, 'Mom', NULL);
+
+select * from animal_json_atr;
+
+SELECT *
+FROM animal_json_atr
+where personal_data IS NOT NULL;
+
+SELECT *
+FROM animal_json_atr
+where personal_data IS NOT NULL and personal_data->>'hobby' != 'NULL';
+-- 4. Изменить XML/JSON документ
+UPDATE animal_json_atr
+SET personal_data = '{"tail_length" : 10, "hobby" : {"early_life": "playing with family", "late_life": "defeating scratch"}}'
+where personal_data is null;
+
+select * from animal_json_atr;
+-- 5. Разделить XML/JSON документ на несколько строк по узлам
+SELECT jsonb_array_elements(data) AS data FROM json_table;
