@@ -33,22 +33,23 @@ class ZooRepository:
         return sql_query
 
     # 1. Скалаярный запрос
-    def get_avg_employees(self):
+    def get_animals_total(self):
 
         print("Вывести общее количество зверей")
 
         sql_query = \
             """
             Select COUNT(*)
-            from animals
+            from animals;
             """
         if self.__sql_executer(sql_query) is not None:
              row = self.__cursor.fetchone()
+             print("Результат: ", row[0])
 
              return row[0]
 
     # 2. Выполнить запрос с несколькими соединениями (JOIN)
-    def get_game_table(self):
+    def get_animals_with_medicine(self):
         print("Вывести вид и возраст животных для которых есть свободное лекарство (максимум 20)")
         sql_query = \
             """
@@ -62,14 +63,14 @@ class ZooRepository:
                         on items_to_animals.id = medicine_table.id
                     WHERE items_to_animals.availability = TRUE
             ) as animals_with_items
-            on animals.id = animals_with_items.animal_id;
-            LIMIT 20
+            on animals.id = animals_with_items.animal_id
+            LIMIT 20;
             """
         if self.__sql_executer(sql_query) is not None:
              self.table = self.__cursor.fetchall()
 
     # 3. Выполнить запрос с ОТВ(CTE) и оконными функциями
-    def get_companies_avg_price_game(self):
+    def get_tall_animals_by_age(self):
         print("Вывести высоких животных отсортированных по весу")
         sql_query = \
             """
@@ -103,7 +104,7 @@ class ZooRepository:
              self.table = self.__cursor.fetchall()
 
     # 5 Вызвать скалярную функцию (написанную в третьей лабораторной работе);
-    def get_actives_game(self):
+    def get_avg_animal_age(self):
         print("Вернуть средний возраст среди животных.")
         sql_query = \
         """
@@ -119,7 +120,7 @@ class ZooRepository:
              self.table = self.__cursor.fetchall()
 
     # 6. Вызвать многооператорную или табличную функцию (написанную в третьей лабораторной работе);
-    def get_clients(self, old_age):
+    def get_old_animals(self, old_age):
         print("Вывести животных старше указанного количества лет.")
         sql_query = \
         """
@@ -203,7 +204,7 @@ class ZooRepository:
         sql_query = \
         """
         INSERT INTO item_to_aviary(id, item_id, aviary_id, is_movable)
-        VALUES(%d, %d, %d, %b)
+        VALUES(%d, %d, %d, %r)
         """ %(id, item_id, aviary_id, is_movable)
 
         if self.__sql_executer(sql_query) is not None:
