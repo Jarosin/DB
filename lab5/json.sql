@@ -45,3 +45,49 @@ sudo mv /tmp/items_to_animals.json /home/jarozin/uni/sem5/DB/lab5/
 -- 2. Выполнить загрузку и сохранение XML или JSON файла в таблицу.
 -- Созданная таблица после всех манипуляций должна соответствовать таблице
 -- базы данных, созданной в первой лабораторной работе.
+
+DROP TABLE IF EXISTS items_json;
+CREATE TABLE IF NOT EXISTS items_json (
+    id integer ,
+    cost DECIMAL,
+    weight DECIMAL ,
+    type item_type ,
+    expiraton_date DATE
+);
+
+ALTER TABLE items_json
+ADD CONSTRAINT pk_items_json PRIMARY KEY(id);
+ALTER TABLE items_json
+ALTER COLUMN weight SET NOT NULL;
+ALTER TABLE items_json
+ALTER COLUMN type SET NOT NULL;
+ALTER TABLE items_json
+ADD CONSTRAINT price_check_json CHECK(cost > 0);
+ALTER TABLE items_json
+ADD CONSTRAINT weight_check_json CHECK(weight > 0);
+
+DROP TABLE IF EXISTS json_table;
+CREATE TABLE IF NOT EXISTS json_table
+(
+    data JSONB
+);
+
+COPY json_table(data) from '/tmp/items.json';
+
+Select * from json_table;
+
+insert into items_json
+select
+    (data->>'id')::integer,
+    (data->>'cost')::DECIMAL,
+    (data->>'weight')::decimal,
+    (data->>'type')::item_type,
+    (data->>'expiraton_date')::date
+from (SELECT jsonb_array_elements(data) AS data FROM json_table) as data;
+
+select * from items_json;
+
+-- 3. Создать таблицу, в которой будет атрибут(-ы) с типом XML или JSON, или
+-- добавить атрибут с типом XML или JSON к уже существующей таблице.
+-- Заполнить атрибут правдоподобными данными с помощью команд INSERT
+-- или UPDATE.
