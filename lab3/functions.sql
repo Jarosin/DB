@@ -1,4 +1,4 @@
-CREATE function or replace avg_age() returns decimal
+CREATE or replace function avg_age() returns decimal
 LANGUAGE sql
 as 'select avg(age) from animals'
 
