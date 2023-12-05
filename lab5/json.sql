@@ -82,8 +82,7 @@ select
     (data->>'cost')::DECIMAL,
     (data->>'weight')::decimal,
     (data->>'type')::item_type,
-    (data->>'expiraton_date')::date,
-    (data->>'asjkdhjkasdhb')::date,
+    (data->>'expiraton_date')::date
 from (SELECT jsonb_array_elements(data) AS data FROM json_table) as data;
 
 select * from items_json;

@@ -11,6 +11,7 @@ MSG = "\n\t\tМеню\n\n"\
       "\t8. Вызвать системную функцию \n"\
       "\t9. Создать таблицу в базе данных, соответствующую тематике БД \n"\
       "\t10. Выполнить вставку данных в созданную таблицу с использованием инструкции INSERT \n"\
+      "\t11. Защита \n"\
       "\t0. Выход \n\n"\
       "\tВыбор: "\
 
@@ -21,7 +22,7 @@ def input_command():
     except:
         command = -1
 
-    if command < 0 or command > 10:
+    if command < 0 or command > 11:
         print("\nОжидался ввод целого чилово числа от 0 до 10")
 
     return command
@@ -68,6 +69,12 @@ def main():
             aviary_id = int(input("aviary_id: "))
             is_movable = bool(input("is_movable: "))
             db_tp.insert_item_to_aviary(id, item_id, aviary_id, is_movable)
+        elif command == 11:
+            print("Ввод данных для поиска суммарной стоимости и количества предметов, доступных введенному типу животного")
+            species = input("Species: ")
+            item_type = input("Item type: ")
+            db_tp.find_items_for_species(species, item_type)
+
         else:
             continue
 

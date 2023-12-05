@@ -212,6 +212,21 @@ class ZooRepository:
         else:
             print("Error! Check Sql Query!")
 
+    def find_items_for_species(self, species, item_type):
+        print("Вывести количество предметов данного типа и сумму их стоимостей, доступных для данного животного")
+        sql_query = \
+        """
+            select count(*), sum(cost)
+            from (select * from animals a
+            join items_to_animals ita
+            on ita.animal_id = a.id
+            join items i
+            on i.id = ita.item_id and type = '%s' and a.species = '%s') as res
+            group by res.type;
+        """ %(item_type, species)
+        if self.__sql_executer(sql_query) is not None:
+            self.table = self.__cursor.fetchall()
+
     def print_table(self):
         for r in self.table:
             print(r)
