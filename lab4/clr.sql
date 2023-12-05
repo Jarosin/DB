@@ -61,8 +61,8 @@ SELECT * FROM pyfn_get_animals_with_species('hawk'::VARCHAR(20));
 CREATE OR REPLACE PROCEDURE pyfn_insert_animal(species VARCHAR(20))
 AS $$
     query = plpy.prepare("""
-        insert into animals (aviary_id, species, weight, height, endangered, age)
-                     values (10, $1, 3, 4, true, 25);
+        insert into animals (id, aviary_id, species, weight, height, endangered, age)
+                     values (1560, 10, $1, 3, 4, true, 25);
     """, ["VARCHAR(20)"])
     plpy.execute(query, [species])
 $$ LANGUAGE plpython3u;
@@ -113,4 +113,4 @@ AS $$
         return (result[0]["type"], result[0]["cnt"])
 $$ LANGUAGE plpython3u;
 --
-SELECT * FROM pyfn_get_item_type_count('medicine'::item_type);
+    SELECT * FROM pyfn_get_item_type_count('medicine'::item_type);

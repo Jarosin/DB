@@ -16,8 +16,8 @@ for each row
 execute procedure "update_animals"();
 
 
-insert into animals (aviary_id, species, weight, height, endangered, age)
-values (10, 'wolf', 3, 4, true, 25);
+insert into animals (id, aviary_id, species, weight, height, endangered, age)
+values (1260, 10, 'wolf', 3, 4, true, 25);
 
 --------------------------------------------------------------
 

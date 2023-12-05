@@ -26,6 +26,8 @@ $$
 	end;
 $$ LANGUAGE plpgsql;
 
+call print_n_animals_age(5);
+
 -------------------------------------------------------------------
 
 Create or replace procedure sum_items_cost(out sum_cost numeric)
@@ -57,9 +59,11 @@ as $$
         total numeric;
 	BEGIN
         call sum_items_cost(total);
-        raise 'Calculated total equal: %', total;
+        raise notice 'Calculated total equal: %', total;
 	end;
 $$ LANGUAGE plpgsql;
+
+call print_sum_cost();
 
 -------------------------------------------------------------------
 create or replace procedure print_all()
@@ -70,7 +74,7 @@ declare
 begin
 	for r in (select table_name from information_schema.tables where table_schema='public')
 	    loop
-	        RAISE 'Таблица из базы данных называется %', r;
+	        RAISE notice 'Таблица из базы данных называется %', r;
 	    end loop;
 end
 $$;

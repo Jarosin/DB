@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS items_json;
 CREATE TABLE IF NOT EXISTS items_json (
     id integer ,
     cost DECIMAL,
-    weight DECIMAL ,
+    weight DECIMAL DEFAULT 0,
     type item_type ,
     expiraton_date DATE
 );
@@ -82,7 +82,8 @@ select
     (data->>'cost')::DECIMAL,
     (data->>'weight')::decimal,
     (data->>'type')::item_type,
-    (data->>'expiraton_date')::date
+    (data->>'expiraton_date')::date,
+    (data->>'asjkdhjkasdhb')::date,
 from (SELECT jsonb_array_elements(data) AS data FROM json_table) as data;
 
 select * from items_json;
