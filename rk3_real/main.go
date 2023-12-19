@@ -61,13 +61,13 @@ func SQLquery1(sqlDB *sql.DB) error {
 	return nil
 }
 
-func SQLquery2(sqlDB *sql.DB) error {
+func SQLquery2(sqlDB *sql.DB, date string) error {
 	script, err := Asset("sql/query2.sql")
 	if err != nil {
 		return err
 	}
 
-	rows, err := sqlDB.Query(string(script))
+	rows, err := sqlDB.Query(string(script), date)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func SQLquery3(sqlDB *sql.DB, date string) error {
 		return err
 	}
 
-	rows, err := sqlDB.Query(string(script))
+	rows, err := sqlDB.Query(string(script), date)
 	if err != nil {
 		return err
 	}
@@ -130,7 +130,7 @@ func task1(sqlDB *sql.DB, date string) error {
 	}
 
 	fmt.Println("Найти сотрудника, который пришел сегодня на работу раньше всех")
-	err = SQLquery2(sqlDB)
+	err = SQLquery2(sqlDB, date)
 	if err != nil {
 		return err
 	}

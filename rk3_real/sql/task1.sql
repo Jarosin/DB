@@ -76,7 +76,7 @@ select * from times;
 -- Задание 1 - скалярная функция
 -- Задача: найти кто опоздал и на сколько в определённую дату
 CREATE OR REPLACE FUNCTION task_1(check_date date)
-returns table(name varchar(64), arrival_time numeric)
+returns table(total bigint, arrival_time numeric)
 AS
 $$
     DECLARE
@@ -85,13 +85,17 @@ $$
     workday_start = '09:00';
 
     return query
-        select res.name, EXTRACT(EPOCH from res.arrival_time)/60
+        select count(*), late
         from (
-            select employees.name, time - workday_start as arrival_time
-            from employees join times
-            on employees.id = times.employee_id and times.date = check_date and times.type = 1
-        ) as res
-        where res.arrival_time > '0 seconds';
+            select res.name, EXTRACT(EPOCH from res.arrival_time)/60 as late
+            from (
+                select employees.name, time - workday_start as arrival_time
+                from employees join times
+                on employees.id = times.employee_id and times.date = check_date and times.type = 1
+            ) as res
+            where res.arrival_time > '0 seconds'
+        ) as late_times
+        group by late_times.late;
     end;
 $$ LANGUAGE plpgsql;
 
