@@ -45,14 +45,14 @@ func SQLquery1(sqlDB *sql.DB) error {
 	}
 	defer rows.Close()
 
-	var dep string
+	var name string
 
 	for rows.Next() {
-		err = rows.Scan(&dep)
+		err = rows.Scan(&name)
 		if err != nil {
 			return err
 		}
-		fmt.Println(dep)
+		fmt.Println(name)
 	}
 	if err = rows.Err(); err != nil {
 		return err
@@ -73,19 +73,18 @@ func SQLquery2(sqlDB *sql.DB) error {
 	}
 	defer rows.Close()
 
-	var id int
+	var name string
 
-	rows.Next()
-	err = rows.Scan(&id)
-	if err != nil {
-		return err
+	for rows.Next() {
+		err = rows.Scan(&name)
+		if err != nil {
+			return err
+		}
+		fmt.Println(name)
 	}
-
 	if err = rows.Err(); err != nil {
 		return err
 	}
-
-	fmt.Println(id)
 
 	return nil
 }
@@ -96,20 +95,20 @@ func SQLquery3(sqlDB *sql.DB, date string) error {
 		return err
 	}
 
-	rows, err := sqlDB.Query(string(script), date)
+	rows, err := sqlDB.Query(string(script))
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	var dep string
+	var name string
 
 	for rows.Next() {
-		err = rows.Scan(&dep)
+		err = rows.Scan(&name)
 		if err != nil {
 			return err
 		}
-		fmt.Println(dep)
+		fmt.Println(name)
 	}
 	if err = rows.Err(); err != nil {
 		return err
@@ -124,38 +123,40 @@ func task1(sqlDB *sql.DB, date string) error {
 		return err
 	}
 
-	fmt.Println("Найти все отделы, в которых работает более 10 сотрудников.")
+	fmt.Println("Найти самого старшего сотрудника в бухгалтерии")
 	err = SQLquery1(sqlDB)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Найти сотрудников, которые не выходят с рабочего места в течение всего рабочего дня.")
+	fmt.Println("Найти сотрудника, который пришел сегодня на работу раньше всех")
 	err = SQLquery2(sqlDB)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Найти все отделы, в которых есть сотрудники, опоздавшие в определённую дату. ")
+	fmt.Println("Найти сотрудника, который пришел сегодня последним")
 
 	return SQLquery3(sqlDB, date)
 }
 
 func GORMquery1(gormDB *gorm.DB) error {
-	rows, err := gormDB.Select("department").Table("employees").Group("department").Having("count(id) > 10").Rows()
+	subQuery := gormDB.Select("min(date_of_birth)").Table("employees").Where("department = 'FIN'")
+
+	rows, err := gormDB.Select("name").Table("employees").Where("employees.date_of_birth = (?)", subQuery).Rows()
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	var dep string
+	var name string
 
 	for rows.Next() {
-		err = rows.Scan(&dep)
+		err = rows.Scan(&name)
 		if err != nil {
 			return err
 		}
-		fmt.Println(dep)
+		fmt.Println(name)
 	}
 	if err = rows.Err(); err != nil {
 		return err
@@ -165,45 +166,47 @@ func GORMquery1(gormDB *gorm.DB) error {
 }
 
 func GORMquery2(gormDB *gorm.DB) error {
-	rows, err := gormDB.Select("distinct employee_id").Table("times").Where("type = 2 and date = '2022-12-13'").Group("employee_id, date").Having("count(*) = 1").Rows()
+	subQuery := gormDB.Select("min(times.time)").Table("times").Where("date = '2022-12-13' and times.type = '1'")
+
+	rows, err := gormDB.Select("employees.name").Table("employees").Joins("join times on employee_id = employees.id").Where("date = '2022-12-13' and times.time = (?)", subQuery).Rows()
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	var id int
+	var name string
 
-	rows.Next()
-	err = rows.Scan(&id)
-	if err != nil {
-		return err
+	for rows.Next() {
+		err = rows.Scan(&name)
+		if err != nil {
+			return err
+		}
+		fmt.Println(name)
 	}
-
 	if err = rows.Err(); err != nil {
 		return err
 	}
-
-	fmt.Println(id)
 
 	return nil
 }
 
 func GORMquery3(gormDB *gorm.DB, date string) error {
-	subQuery := gormDB.Select("employee_id").Table("times").Where("type = 1 and date = ?", date).Group("employee_id").Having("min(time) > '09:00'")
-	rows, err := gormDB.Select("distinct department").Table("employees").Where("id in (?)", subQuery).Rows()
+	subQuery := gormDB.Select("max(times.time)").Table("times").Where("date = '2022-12-13' and times.type = '1'")
+
+	rows, err := gormDB.Select("employees.name").Table("employees").Joins("join times on employee_id = employees.id").Where("date = '2022-12-13' and times.time = (?)", subQuery).Rows()
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	var dep string
+	var name string
 
 	for rows.Next() {
-		err = rows.Scan(&dep)
+		err = rows.Scan(&name)
 		if err != nil {
 			return err
 		}
-		fmt.Println(dep)
+		fmt.Println(name)
 	}
 	if err = rows.Err(); err != nil {
 		return err
@@ -213,19 +216,19 @@ func GORMquery3(gormDB *gorm.DB, date string) error {
 }
 
 func task2(gormDB *gorm.DB, date string) error {
-	fmt.Println("Найти все отделы, в которых работает более 10 сотрудников.")
+	fmt.Println("Найти самого старшего сотрудника в бухгалтерии")
 	err := GORMquery1(gormDB)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Найти сотрудников, которые не выходят с рабочего места в течение всего рабочего дня.")
+	fmt.Println("Найти сотрудника, который пришел сегодня на работу раньше всех")
 	err = GORMquery2(gormDB)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("Найти все отделы, в которых есть сотрудники, опоздавшие в определённую дату. ")
+	fmt.Println("Найти сотрудника, который пришел сегодня последним")
 
 	return GORMquery3(gormDB, date)
 }
